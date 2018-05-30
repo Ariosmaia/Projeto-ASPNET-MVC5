@@ -1,0 +1,11 @@
+﻿
+@Html.AntiForgeryToken()  @*Protege contra ataques hackers*@
+<form action="/Categoria/Adiciona" method="post">
+    <label for="nome">Nome: </label>
+    <input id="nome" name="categorias.Nome" />
+
+    <label for="descricao">Descrição: </label>
+    <input id="descricao" name="categorias.Descricao" />
+
+    <input type="submit" value="Cadastrar" />
+</form>

@@ -1,0 +1,70 @@
+﻿@model IList<CaelumEstoque.Models.Produto>
+    @*Busca a classe do tipo Produto*@
+@*Fala o tipo da variavel Model. @model minuscula fala o tipo da Model, lançada no Foreach. Lembrando que o actionLink primeiro argumento é string.
+    Isso se chama view fortemente tipada.(Strongly typed view)*@
+
+<button class="btn btn-dark">@Html.ActionLink("Cadastrar um produto", "Form", "Produto")</button>
+<table class="table table-hover">
+    
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @*Tenho que colcar o "@" para o razor reconhecer*@
+        @foreach (var produto in Model) //Para cada produto dentro da ViewBag ou do Model, ele irá listar dentro da tabela.
+                                       // É preciso passar o tipo completo do nome do produto, para o c# reconhecer string no actionLink
+                                       // Model segura o que passei como argumento do metodo view. Model também é dinamico, porem é diferente da viewBag
+        {
+            <tr>
+                <td>@produto.Id</td>
+                <td>
+
+                    @Html.RouteLink(produto.Nome, "VisualizaProduto", new { id = produto.Id })@*Posso o usar o RouteLink para o link.
+                        Caso os metosdos mudem cosntantemente fica mais facil dar manutenção*@
+                    @*@<a href="@Url.RouteUrl("VisualizaProduto", new { id = produto.Id })">@produto.Nome</a>*@
+                    @*UrlRouter é outra opção que funciona*@
+                    @*@Html.ActionLink(produto.Nome, "Visualiza", new { id = produto.Id })*@ @*Texto do link + action + id (Argumento objeto anonimo do c#)*@
+                    @*Primeiro argumento da actionLink espera uma string, c# não sabe que é uma string*@
+                    @*Link para a pagina de vizualização do produto, Rota padrão: controle + action + id*@
+
+                </td>
+                <td id="quantidade@(produto.Id)">@produto.Quantidade</td>
+                @* Muda o valor da quantidade com a função do javascript, pega a quantidade + id unico*@
+                <td>
+                    <a href="#" onclick="decrementa(@produto.Id)">Decrementar</a>
+                    @*href não leva pra lugar nenhum, quando clicar no link chama a funcão decrementa o produto*@
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+<script type="text/javascript" src="~/Scripts/jquery-3.0.0.js"></script>
+
+<script type="text/javascript"> @* Criando código Ajax*@
+    function decrementa(produtoId){
+    var url = "@Url.Action("DecrementaQtd", "Produto")";// Gera a url com nome do action e controler
+        var params = { id: produtoId }; //Dicionario javaScript, nome do paramentro que quero mandar para servidor Id + qual o valor desse pametro
+        // Recebe o produtoID do argumento da função.
+        $.post(url, params, atualiza); // Envia post para o servidor, para mandar o get é só trocar.
+        // $.post(Url que quero acessar + id do prduto + atualização da quantidade )
+  }
+
+    function atualiza(resposta) { // Quando o servidor devolve a resposta ele atualiza a tela
+      //Recebe o Json devolvido pelo servidor.
+    var elemento = $("#quantidade" + resposta.Id);// Busca o td + o id.
+    elemento.html(resposta.Quantidade); // Nova html que vai dentro do td.
+  }
+
+</script>
+
+
+
+
+

@@ -1,0 +1,53 @@
+﻿@*Layout page que será utilizado em todas as paginas, fica dentro da pasta shared*@
+
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/Site.css">
+
+    <title>_Layout</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark"">
+                <h3 class="text-muted navbar-brand" id="home">@Html.ActionLink("Caelum Estoque", "Index", "Home")</h3>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            @Html.ActionLink("Produtos", "Index", "Produto")
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Categorias", "Index", "Categoria")
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Usuários", "Index", "Login")
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div id="conteudo">
+            @RenderBody() @*Renderiza automatico em todas paginas, coloca as outra viewa*@
+            @*Para repetir em todas paginas devo criar o _ViewStar.cshtml*@
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Scripts/jquery-3.0.0.slim.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

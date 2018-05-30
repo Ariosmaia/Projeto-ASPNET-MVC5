@@ -1,0 +1,44 @@
+﻿
+<form action="/Produto/Adiciona" method="post">
+    @*action busca o metodo Adiona do Produto. Por padrão ele é "GET" e para esconder as informações
+        e trasnformar em "post, devemos mudar o metodo*@
+
+    @Html.AntiForgeryToken()  @*Protege contra ataques hackers*@
+
+    @Html.ValidationMessage("produto.Invalido") @*Mensagem de erro personalizado que criei, enviando o token*@
+    
+    
+
+
+    @*Em caso de erro, em cada input irei colocar o value com a ViewBag de produto enviada em caso de erro.*@
+    <label for="nome">Nome: </label>
+    <input id="nome" name="produto.Nome" value="@ViewBag.Produto.Nome" class="form-control" />
+    @Html.ValidationMessage("produto.Nome")@*Html.helper gera pedaços de Html na view. Erro que deve ser mostrada é igual ao do name do input. *@
+
+    <label for="preco">Preço: </label>
+    <input id="preco" name="produto.Preco" value="@ViewBag.Produto.Preco" class="form-control" />
+    @Html.ValidationMessage("produto.Preco") @*Informa o erro estipulado dentro da classe produto*@
+
+    <label for="quantidade">Quantidade: </label>
+    <input id="quantidade" name="produto.Quantidade" value="@ViewBag.Produto.Quantidade" class="form-control" />
+
+    <label for="descricao">Descrição: </label>
+    <input id="descricao" name="produto.Descricao" value="@ViewBag.Produto.Descricao" class="form-control" />
+
+    <label for="categoria">Categoria: </label>
+    @*Select cria um comboBox. Para cada opção dentro do select precisamos do value dela "Id" *@
+    <select id="categoria" name="produto.CategoriaId" class="form-control">
+        @foreach (var categoria in ViewBag.Categorias)
+        {
+
+            <option value="@categoria.Id" selected="@categoria.Id.Equals(ViewBag.Produto.CategoriaId)">@*Deixa selecionada a categoria que o usuario colocou antes do erro*@
+                @categoria.Nome
+            </option>
+        }
+
+    </select>
+
+    <input type="submit" value="Cadastrar" />
+
+</form>
+
